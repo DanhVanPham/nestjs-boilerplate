@@ -4,7 +4,8 @@ import { FilterQuery, Model, QueryOptions } from 'mongoose';
 import { FindAllResponse } from 'src/types/common.type';
 
 export abstract class BaseRepositoryAbstract<T extends BaseEntity>
-  implements BaseRepositoryInterface<T> {
+  implements BaseRepositoryInterface<T>
+{
   protected constructor(private readonly model: Model<T>) {
     this.model = model;
   }

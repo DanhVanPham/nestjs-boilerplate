@@ -4,7 +4,8 @@ import { FindAllResponse } from 'src/types/common.type';
 import { BaseRepositoryInterface } from '@repositories/base/base.interface.repository';
 
 export abstract class BaseServiceAbstract<T extends BaseEntity>
-  implements BaseServiceInterface<T> {
+  implements BaseServiceInterface<T>
+{
   constructor(private readonly repository: BaseRepositoryInterface<T>) {}
 
   async create(item: any): Promise<T> {
