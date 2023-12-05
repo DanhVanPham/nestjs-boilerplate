@@ -5,8 +5,17 @@ import { UserRole } from '@modules/user-roles/entities/user-role.entity';
 import { Address, AddressSchema } from './address.entity';
 import { FlashCardDocument } from '@modules/flash-cards/entities/flash-card.entity';
 import { CollectionDocument } from '@modules/collection/entities/collection.entity';
+import { Exclude, Expose, Type, Transform } from 'class-transformer';
 
 export type UserDocument = HydratedDocument<User>;
+
+export enum LANGUAGES {
+  ENGLISH = 'English',
+  FRENCH = 'French',
+  JAPANESE = 'Japanese',
+  KOREAN = 'Korean',
+  SPANISH = 'Spanish',
+}
 
 export enum GENDER {
   Male = 'MALE',
@@ -47,6 +56,7 @@ export class User extends BaseEntity {
     unique: true,
     match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
   })
+  @Expose({ name: 'mail', toPlainOnly: true })
   email: string;
 
   @Prop({
@@ -92,12 +102,18 @@ export class User extends BaseEntity {
     type: mongoose.Schema.Types.ObjectId,
     ref: UserRole.name,
   })
+  @Type(() => UserRole)
+  @Transform((value) => value.obj.role?.name, { toClassOnly: true })
   role: UserRole;
 
   @Prop({
     type: [AddressSchema],
   })
+  @Type(() => Address)
   address: Address[];
+
+  @Exclude()
+  stripe_customer_id: string;
 
   @Prop()
   headline: string;
@@ -106,6 +122,21 @@ export class User extends BaseEntity {
   friendly_id: number;
 
   default_address?: string;
+
+  @Prop({
+    type: [String],
+    enum: LANGUAGES,
+  })
+  interested_languages: LANGUAGES[];
+
+  @Prop({
+    type: [
+      {
+        type: AddressSchema,
+      },
+    ],
+  })
+  addressArr: Address[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

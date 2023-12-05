@@ -1,6 +1,7 @@
 import { BaseEntity } from '@modules/shared/base/base.entity';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { Exclude } from 'class-transformer';
 
 export type AddressDocument = HydratedDocument<Address>;
 
@@ -16,6 +17,7 @@ export class Address extends BaseEntity {
   city: string;
 
   @Prop({ required: false, minlength: 2, maxlength: 50 })
+  @Exclude()
   postal_code?: number;
 
   @Prop({ required: true, minlength: 2, maxlength: 50 })

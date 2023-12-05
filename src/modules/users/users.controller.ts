@@ -6,12 +6,17 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
+  SerializeOptions,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import MongooseClassSerializerInterceptor from 'src/interceptors/mongoose-class-serializer.interceptor';
+import { User } from './entities/user.entity';
 
 @Controller('users')
+@UseInterceptors(MongooseClassSerializerInterceptor(User))
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -20,6 +25,9 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
+  @SerializeOptions({
+    excludePrefixes: ['first', 'last'],
+  })
   @Get()
   findAll() {
     return this.usersService.findAll();
