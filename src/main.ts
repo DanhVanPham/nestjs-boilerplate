@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config_service = app.get(ConfigService);
   const portServer = config_service.get('PORT') || 3000;
-  console.log(process.env.NODE_ENV);
+  console.log(config_service.get('DATABASE_URI'));
   await app.listen(portServer, () => {
     logger.log(`Application is running on port: ${portServer}`);
   });
