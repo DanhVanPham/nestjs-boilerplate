@@ -11,6 +11,8 @@ import {
   Collection,
   CollectionSchema,
 } from '@modules/collection/entities/collection.entity';
+import { UserRolesService } from '@modules/user-roles/user-roles.service';
+import { UsersRepository } from '@repositories/users.repository';
 
 @Module({
   imports: [
@@ -30,6 +32,13 @@ import {
     ]),
   ],
   controllers: [UsersController],
-  providers: [UsersService],
+  providers: [
+    UsersService,
+    UserRolesService,
+    {
+      provide: 'UserRepositoryInterface',
+      useClass: UsersRepository,
+    },
+  ],
 })
-export class UsersModule { }
+export class UsersModule {}
