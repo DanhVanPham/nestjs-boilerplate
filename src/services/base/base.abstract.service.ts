@@ -8,6 +8,10 @@ export abstract class BaseServiceAbstract<T extends BaseEntity>
 {
   constructor(private readonly repository: BaseRepositoryInterface<T>) {}
 
+  async findOneByCondition(condition: object): Promise<T> {
+    return await this.repository.findOneByCondition(condition);
+  }
+
   async create(item: any): Promise<T> {
     return await this.repository.create(item);
   }

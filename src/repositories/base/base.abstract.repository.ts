@@ -11,7 +11,8 @@ export abstract class BaseRepositoryAbstract<T extends BaseEntity>
   }
   async create(dto: T): Promise<T> {
     const created_data = await this.model.create(dto);
-    return created_data.save();
+    created_data.save();
+    return created_data;
   }
   async findOneById(id: string, projection?: string): Promise<T> {
     const item = await this.model.findById(id, projection);
@@ -30,7 +31,7 @@ export abstract class BaseRepositoryAbstract<T extends BaseEntity>
     options?: QueryOptions<T>,
   ): Promise<FindAllResponse<T>> {
     const [count, items] = await Promise.all([
-      this.model.count({ ...condition, deleted_at: null }),
+      this.model.countDocuments({ ...condition, deleted_at: null }),
       this.model.find(
         { ...condition, deleted_at: null },
         options.projection,

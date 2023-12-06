@@ -9,6 +9,7 @@ export interface Write<T> {
 export interface Read<T> {
   findAll(filter?: object, options?: object): Promise<FindAllResponse<T>>;
   findOne(id: string): Promise<T>;
+  findOneByCondition(condition: object): Promise<T>;
 }
 
 export interface BaseServiceInterface<T> extends Write<T>, Read<T> {}

@@ -46,10 +46,10 @@ export class CreateUserDto {
   @IsEnum(LANGUAGES, { each: true })
   interested_languages: LANGUAGES[];
 
-  @IsOptional()
-  @IsArray()
-  @ArrayMinSize(1)
-  @ValidateNested({ each: true })
-  @Type(() => CreateAddressDto)
-  addressArr?: CreateAddressDto[];
+  // @IsOptional()
+  // @IsArray()
+  // @ArrayMinSize(1)
+  // @ValidateNested({ each: true })
+  // @Type(() => CreateAddressDto)
+  // addressArr?: CreateAddressDto[];
 }

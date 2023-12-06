@@ -106,11 +106,15 @@ export class User extends BaseEntity {
   @Transform((value) => value.obj.role?.name, { toClassOnly: true })
   role: UserRole;
 
-  @Prop({
-    type: [AddressSchema],
-  })
-  @Type(() => Address)
-  address: Address[];
+  @Prop()
+  @Exclude()
+  current_refresh_token: string;
+
+  // @Prop({
+  //   type: [AddressSchema],
+  // })
+  // @Type(() => Address)
+  // address: Address[];
 
   @Exclude()
   stripe_customer_id: string;
@@ -166,11 +170,10 @@ export const UserSchemaFactory = (
   });
 
   user_schema.virtual('default_address').get(function (this: UserDocument) {
-    if (this.address.length) {
-      return `${(this.address[0].street && ' ') || ''}${this.address[0].city} ${
-        this.address[0].state
-      } ${this.address[0].country}`;
-    }
+    // if (this.address.length) {
+    //   return `${(this.address[0].street && ' ') || ''}${this.address[0].city} ${this.address[0].state
+    //     } ${this.address[0].country}`;
+    // }
   });
   return user_schema;
 };
