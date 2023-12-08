@@ -1,16 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { BaseServiceAbstract } from 'src/services/base/base.abstract.service';
+import { FlashCard } from './entities/flash-card.entity';
 
 @Injectable()
-export class FlashCardsService {
-  findAll() {
-    return `This action returns all flashCards`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} flashCard`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} flashCard`;
-  }
-}
+export class FlashCardsService extends BaseServiceAbstract<FlashCard> {}

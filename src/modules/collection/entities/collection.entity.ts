@@ -1,17 +1,17 @@
 import { BaseEntity } from '@modules/shared/base/base.entity';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
 import { User } from '@modules/users/entities/user.entity';
-import { Topic } from '@modules/topics/entities/topic.entity';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import * as mongoose from 'mongoose';
 
-export type CollectionDocument = HydratedDocument<Collection>;
+export enum COLLECTION_LEVEL {
+  EASY = 'easy',
+  MEDIUM = 'medium',
+  HARD = 'hard',
+  CHAOS = 'chaos',
+}
 
-@Schema({
-  timestamps: {
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
-  },
-})
+export type CollectionDocument = mongoose.HydratedDocument<Collection>;
+@Schema()
 export class Collection extends BaseEntity {
   @Prop({ required: true })
   name: string;
@@ -19,32 +19,23 @@ export class Collection extends BaseEntity {
   @Prop()
   description: string;
 
-  @Prop({ default: 1 })
-  level: number;
+  @Prop({ default: COLLECTION_LEVEL.EASY, enum: COLLECTION_LEVEL })
+  level: COLLECTION_LEVEL;
 
-  @Prop({ required: true })
-  order: string;
+  @Prop()
+  order: number;
 
   @Prop()
   image: string;
 
+  @Prop({ default: 0, min: 0 })
+  total_flash_cards: number;
+
   @Prop({ default: false })
-  isPublic: boolean;
+  is_public: boolean;
 
-  @Prop({ default: 0 })
-  total_flash_card: number;
-
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: User.name,
-  })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
   user: User;
-
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: Topic.name,
-  })
-  topic: Topic;
 }
 
 export const CollectionSchema = SchemaFactory.createForClass(Collection);

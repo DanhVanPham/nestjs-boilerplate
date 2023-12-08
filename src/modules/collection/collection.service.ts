@@ -1,15 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { BaseServiceAbstract } from 'src/services/base/base.abstract.service';
+import { Collection } from './entities/collection.entity';
 @Injectable()
-export class CollectionService {
-  findAll() {
-    return `This action returns all collection`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} collection`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} collection`;
-  }
-}
+export class CollectionService extends BaseServiceAbstract<Collection> {}
