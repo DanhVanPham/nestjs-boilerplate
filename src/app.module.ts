@@ -11,6 +11,9 @@ import { TopicsModule } from '@modules/topics/topics.module';
 import { FlashCardsModule } from '@modules/flash-cards/flash-cards.module';
 import { CollectionModule } from '@modules/collection/collection.module';
 import { AuthModule } from '@modules/auth/auth.module';
+import { DailyCheckInModule } from '@modules/daily-check-in/daily-check-in.module';
+import { APP_FILTER } from '@nestjs/core';
+import { GlobalExceptionFilter } from './exception-filters/global-exception.filter';
 
 @Module({
   imports: [
@@ -47,8 +50,15 @@ import { AuthModule } from '@modules/auth/auth.module';
     FlashCardsModule,
     CollectionModule,
     AuthModule,
+    DailyCheckInModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: GlobalExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}
