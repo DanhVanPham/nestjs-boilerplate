@@ -114,44 +114,43 @@ export class UsersService extends BaseServiceAbstract<User> {
         (user.last_check_in.getFullYear() !== check_in_time.getFullYear() ||
           user.last_check_in.getMonth() !== check_in_time.getMonth())
       ) {
-        const {
-          previous_month_data,
-          current_month_data,
-        } = daily_check_in.reduce(
-          (result, check_in_data) => {
-            if (
-              check_in_data.checked_date.getFullYear() ===
-                user.last_check_in.getFullYear() &&
-              check_in_data.checked_date.getMonth() ===
-                user.last_check_in.getMonth()
-            ) {
-              return {
-                ...result,
-                previous_month_data: [
-                  ...result.previous_month_data,
-                  check_in_data,
-                ],
-              };
-            }
-            if (
-              check_in_data.checked_date.getFullYear() ===
-                check_in_time.getFullYear() &&
-              check_in_data.checked_date.getMonth() === check_in_time.getMonth()
-            ) {
-              return {
-                ...result,
-                current_month_data: [
-                  ...result.current_month_data,
-                  check_in_data,
-                ],
-              };
-            }
-          },
-          {
-            previous_month_data: [],
-            current_month_data: [],
-          },
-        );
+        const { previous_month_data, current_month_data } =
+          daily_check_in.reduce(
+            (result, check_in_data) => {
+              if (
+                check_in_data.checked_date.getFullYear() ===
+                  user.last_check_in.getFullYear() &&
+                check_in_data.checked_date.getMonth() ===
+                  user.last_check_in.getMonth()
+              ) {
+                return {
+                  ...result,
+                  previous_month_data: [
+                    ...result.previous_month_data,
+                    check_in_data,
+                  ],
+                };
+              }
+              if (
+                check_in_data.checked_date.getFullYear() ===
+                  check_in_time.getFullYear() &&
+                check_in_data.checked_date.getMonth() ===
+                  check_in_time.getMonth()
+              ) {
+                return {
+                  ...result,
+                  current_month_data: [
+                    ...result.current_month_data,
+                    check_in_data,
+                  ],
+                };
+              }
+            },
+            {
+              previous_month_data: [],
+              current_month_data: [],
+            },
+          );
         const previous_month_point = previous_month_data.length;
         const current_month_point = current_month_data.length + 1; // One more point for the day has just checked-in
         return await this.user_repository.update(user._id.toString(), {

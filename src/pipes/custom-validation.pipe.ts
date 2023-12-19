@@ -1,9 +1,4 @@
-import {
-  ValidationPipe,
-  Injectable,
-  Logger,
-  ArgumentMetadata,
-} from '@nestjs/common';
+import { ValidationPipe, Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class CustomValidation extends ValidationPipe {
@@ -13,7 +8,7 @@ export class CustomValidation extends ValidationPipe {
     super();
     this.logger = new Logger(CustomValidation.name);
   }
-  transform(value: any, metadata: ArgumentMetadata) {
+  transform(value: any) {
     this.logger.log('===TRIGGER GLOBAL PIPE===');
     return value;
   }

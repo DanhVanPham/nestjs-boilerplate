@@ -1,14 +1,17 @@
 import {
   PipeTransform,
   Logger,
-  ArgumentMetadata,
+  // ArgumentMetadata,
   BadRequestException,
 } from '@nestjs/common';
 import { isObjectIdOrHexString } from 'mongoose';
 
 export class ParseMongoIdPipe implements PipeTransform<string> {
   logger = new Logger(ParseMongoIdPipe.name);
-  transform(value: string, metadata: ArgumentMetadata): string {
+  transform(
+    value: string,
+    // , metadata: ArgumentMetadata
+  ): string {
     // NOTICE: ROUTE PIPE
     this.logger.log('===TRIGGER ROUTE PARAMS PIPE===');
     if (!isObjectIdOrHexString(value))

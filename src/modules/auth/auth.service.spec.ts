@@ -21,7 +21,7 @@ jest.mock('../../users/users.service');
 describe('AuthService', () => {
   let auth_service: AuthService;
   let user_service: UsersService;
-  let jwt_service: JwtService;
+  // let jwt_service: JwtService;
   //  = new AuthService(
   //   new ConfigService(),
   //   new JwtService(),
@@ -53,7 +53,7 @@ describe('AuthService', () => {
 
     auth_service = module_ref.get<AuthService>(AuthService);
     user_service = module_ref.get<UsersService>(UsersService);
-    jwt_service = module_ref.get<JwtService>(JwtService);
+    // jwt_service = module_ref.get<JwtService>(JwtService);
   });
 
   it('should be defined', () => {

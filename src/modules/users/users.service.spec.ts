@@ -113,7 +113,7 @@ describe('UsersService', () => {
       describe('Case 2.2.1: The day to check-in is the last day of month', () => {
         it('should receive reward for both of month if the month before has not got reward (case 2.2.1.1)', async () => {
           // Arrange
-          const user = ({
+          const user = {
             ...createUserStub(),
             daily_check_in: [
               {
@@ -131,7 +131,7 @@ describe('UsersService', () => {
             ],
             last_check_in: new Date('2023-01-15 07:00:00'),
             last_get_check_in_rewards: new Date('2022-12-31 09:00:00'),
-          } as unknown) as User;
+          } as unknown as User;
           const testing_date = '2023-02-28 15:00:00';
           const check_in_date = new Date(testing_date);
 

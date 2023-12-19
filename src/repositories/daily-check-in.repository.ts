@@ -19,7 +19,8 @@ import {
 @Injectable()
 export class DailyCheckInRepository
   extends BaseRepositoryAbstract<DailyCheckInDocument>
-  implements DailyCheckInRepositoryInterface {
+  implements DailyCheckInRepositoryInterface
+{
   constructor(
     @InjectModel(DailyCheckIn.name)
     private readonly daily_check_in_model: Model<DailyCheckInDocument>,

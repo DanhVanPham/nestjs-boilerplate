@@ -10,7 +10,7 @@ export const createUserStub = (): User => {
     password: 'strongestP@ssword',
     username: 'johndoe',
     gender: GENDER.Male,
-    role: ('admin' as unknown) as UserRole,
+    role: 'admin' as unknown as UserRole,
     fullName: 'John Doe',
     point: 0,
   };
